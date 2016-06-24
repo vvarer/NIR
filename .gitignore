@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Рейтинг</title>
+  <style type="text/css">
+  table {
+border-spacing: 0 10px;
+font-family: 'Open Sans', sans-serif;
+font-weight: bold;
+}
+tr {
+padding: 10px 20px;
+background: #56433D;
+color: #F9C941;
+border-right: 2px solid; 
+font-size: 0.9em;
+}
+tr:first-child {
+text-align: left;
+}
+tr:last-child {
+border-right: none;
+}
+th {
+padding: 10px 20px;
+background: #56433D;
+color: #F9C941;
+border-right: 2px solid; 
+font-size: 0.9em;
+}
+th:first-child {
+text-align: left;
+}
+th:last-child {
+border-right: none;
+}
+td {
+vertical-align: middle;
+padding: 10px;
+font-size: 14px;
+text-align: center;
+border-top: 2px solid #56433D;
+border-bottom: 2px solid #56433D;
+border-right: 2px solid #56433D;
+}
+td:first-child {
+border-left: 2px solid #56433D;
+border-right: none;
+}
+td:nth-child(2){
+text-align: left;
+}
+  </style>
+ </head>
+ <body>
+ <?php 
+ 
+/*
+---Получение ACCESS_TOKEN пользователей прошедших через приложение
+ $token = file_get_contents("https://graph.facebook.com/v2.6/oauth/access_token?client_id=915764441867947&client_secret=f6e2065cdd5fe3e4eba4680e73eab2b2&grant_type=client_credentials&access_token=EAANA4gZABZAqsBAA13TZASpkASrzRryEZAkJzFHZAWHn1ZAJZAfC4SKk4HEv0YZAOuuud5jqR0RjijyninP8aZApFiIR2qrfj5onw4egfNypG89TpOovcvji3WLQN1EQgyhE5muC0ULVejsyewTrzO1tpC0ceskq2IBFDVHdkGGBBwukySZB2tzVdV");
+ $token1=json_decode($token, true);
+ $access_token=$token1['access_token'];
+ print_r($access_token.'3333');
+ 
+ ---API запросы информации о друзьях, которые зашли через приложение---
+ $friends = file_get_contents("https://graph.facebook.com/v2.6/me/invitable_friends?access_token=".'$access_token'); 
+$wee=file_get_contents("https://graph.facebook.com/v2.6/me/friends?access_token=.'$access_token');
+$we=json_decode($wee, true);
+$we1=$we['summary'];
+$all=$we1['total_count'];
+$item =json_decode($friends, true);
+$items=array_slice($item, 0, 1);
+$retr=$items['data'];
+$myid1=file_get_contents("https://graph.facebook.com/v2.6/me/?access_token=915764441867947|sckGDOB9CEz4Np24sw9RjkQ3Lus");
+$myid2=json_decode($myid1, true);
+$myid=$myid2['id'];
+ */
+ 
+ 
+ /*API запросы информации о друзьях(всех друзья, для проверки системы)*/
+$friends = file_get_contents("https://graph.facebook.com/v2.6/me/invitable_friends?access_token=EAACEdEose0cBADCUF54sZB2mbNTQNZBRY9ZCS26FLuUTSLxK0Fx1uKOhN1J3dclmW0oVpWbg6s6BXjZBE2peZButrZBnm6fWaNwMz393WiYfZBZA9WlToqlr6f63L3ALIDzv4I0L0woiJYvZCNqgu1MNQZCufnirt9UH5u9oWRZCFPbHy3NwKQ9lOLn"); 
+$wee=file_get_contents("https://graph.facebook.com/v2.6/me/friends?access_token=EAACEdEose0cBADCUF54sZB2mbNTQNZBRY9ZCS26FLuUTSLxK0Fx1uKOhN1J3dclmW0oVpWbg6s6BXjZBE2peZButrZBnm6fWaNwMz393WiYfZBZA9WlToqlr6f63L3ALIDzv4I0L0woiJYvZCNqgu1MNQZCufnirt9UH5u9oWRZCFPbHy3NwKQ9lOLn");
+$we=json_decode($wee, true);
+$we1=$we['summary'];
+$all=$we1['total_count'];
+$item =json_decode($friends, true);
+$items=array_slice($item, 0, 1);
+$retr=$items['data'];
+/*API запрос своего ID*/
+$myid1=file_get_contents("https://graph.facebook.com/v2.6/me/?access_token=EAACEdEose0cBADCUF54sZB2mbNTQNZBRY9ZCS26FLuUTSLxK0Fx1uKOhN1J3dclmW0oVpWbg6s6BXjZBE2peZButrZBnm6fWaNwMz393WiYfZBZA9WlToqlr6f63L3ALIDzv4I0L0woiJYvZCNqgu1MNQZCufnirt9UH5u9oWRZCFPbHy3NwKQ9lOLn");
+$myid2=json_decode($myid1, true);
+$myid=$myid2['id'];
+
+/* Подключение к базе данных
+<?php
+  $mysqli = new mysqli('localhost', 'Admin', 'pass', 'mybase');
+---Запрос своего ранга 
+$rankme=mysql_query("SELECT rank FROM `mybase` where id=$myid")
+?>
+*/
+
+/*"Рыба" для тестирования*/
+$rankme = 2000;
+$rank = [
+    "https://scontent.xx.fbcdn.net/v/t1.0-1/c9.0.50.50/p50x50/12646956_549396381886437_7090268359379578971_n.jpg?oh=809e8bca46347f848f4768d6670e2a1c&oe=57FA9DED" => 2130,
+    "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=f2a67d28b2c5825839d0bf36c6194d65&oe=57FC792F" => 3124,
+];
+
+
+for ($i=1; $i<=$all; $i++) {
+/*$ranki[i] = mysql_query("SELECT rank FROM `mybase` where id=$id[i]");
+запрос данных о пользователе*/
+
+$re1=$retr[$i-1];
+/*
+Проверка является ли User слушателем академии
+$vi=mysql_query("SELECT rank FROM `mybase` where id=$re1["id"]");
+if ($vi<>"false") {
+*/
+$re2=$re1["picture"];
+$re3=$re2["data"];
+$id[$i]=$re1["id"];
+$name[$i]=$re1["name"];
+$photo[$i]=$re3["url"];
+$ranki[$i]=$rank;
+/*$ranki[$i]=$vi;*/
+if ($i > 5) {
+        break;
+    };
+}
+/*if ($vi="false") {$i=$i-1}
+}
+*/
+?>
+
+
+<!--Вывод таблицы результатов
+Выводится только при наличии нужного числа пользователей-->
+<table border="1" width="50%" cellpadding="5">
+   <tr>
+    <th>Информация о пользователе</th>
+    <th>Рейтинг</th>
+	<th>Разница</th>
+   </tr>
+
+ <? if ($all>0) echo "<tr>"?>
+    <? if ($all>0) echo "<td>"?><?php if ($all>0) echo "<img src=$photo[1]><br>", $name[1]?><? if ($all>0) echo "</td>"?>
+    <? if ($all>0) echo "<td>"?><?php if ($all>0) echo $rank[$photo[1]], ' выполненных заданий'?><? if ($all>0) echo "</td>"?>
+		<? if ($all>0) echo "<td>"?><?php if ($all>0) if ($rank[$photo[1]] > $rankme) {echo abs($rank[$photo[1]]-$rankme), ' заданий нужно выполнить чтобы догнать';}?>
+	<?php if ($all>0) if ($rank[$photo[1]] < $rankme) {echo abs($rank[$photo[1]]-$rankme), ' заданий-ваше преимущество';}?>
+	<?php if ($all>0) if ($rank[$photo[1]] == $rankme) echo 'Одинаковые результаты';?>
+	<? if ($all>0) echo "</td>"?>
+  <? if ($all>0) echo "</tr>"?>
+
+ <? if ($all>1) echo "<tr>"?>
+    <? if ($all>1) echo "<td>"?><?php if ($all>1) echo "<img src=$photo[2]><br>", $name[2]?><? if ($all>1) echo "</td>"?>
+    <? if ($all>1) echo "<td>"?><?php if ($all>1) echo $rank[$photo[2]], ' выполненных заданий'?><? if ($all>1) echo "</td>"?>
+		<? if ($all>1) echo "<td>"?><?php if ($all>1) if ($rank[$photo[2]] > $rankme) {echo abs($rank[$photo[2]]-$rankme), ' заданий нужно выполнить чтобы догнать';}?>
+	<?php if ($all>1) if ($rank[$photo[2]] < $rankme) {echo abs($rank[$photo[2]]-$rankme), ' заданий-ваше преимущество';}?>
+	<?php if ($all>1) if ($rank[$photo[2]] == $rankme) echo 'Одинаковые результаты';?>
+	<? if ($all>1) echo "</td>"?>
+  <? if ($all>1) echo "</tr>"?>
+ 
+  
+  <? if ($all>2) echo "<tr>"?>
+    <? if ($all>2) echo "<td>"?><?php if ($all>2) echo "<img src=$photo[3]><br>", $name[3]?><? if ($all>2) echo "</td>"?>
+    <? if ($all>2) echo "<td>"?><?php if ($all>2) echo $rank[$photo[3]], ' выполненных заданий'?><? if ($all>2) echo "</td>"?>
+		<? if ($all>2) echo "<td>"?><?php if ($all>2) if ($rank[$photo[3]] > $rankme) {echo abs($rank[$photo[3]]-$rankme), ' заданий нужно выполнить чтобы догнать';}?>
+	<?php if ($all>2) if ($rank[$photo[3]] < $rankme) {echo abs($rank[$photo[3]]-$rankme), ' заданий-ваше преимущество';}?>
+	<?php if ($all>2) if ($rank[$photo[3]] == $rankme) echo 'Одинаковые результаты';?>
+	<? if ($all>2) echo "</td>"?>
+  <? if ($all>2) echo "</tr>"?>
+ 
+ <? if ($all>3) echo "<tr>"?>
+    <? if ($all>3) echo "<td>"?><?php if ($all>3) echo "<img src=$photo[4]><br>", $name[4]?><? if ($all>3) echo "</td>"?>
+    <? if ($all>3) echo "<td>"?><?php if ($all>3) echo $rank[$photo[4]], ' выполненных заданий'?><? if ($all>3) echo "</td>"?>
+		<? if ($all>3) echo "<td>"?><?php if ($all>3) if ($rank[$photo[4]] > $rankme) {echo abs($rank[$photo[4]]-$rankme), ' заданий нужно выполнить чтобы догнать';}?>
+	<?php if ($all>3) if ($rank[$photo[4]] < $rankme) {echo abs($rank[$photo[4]]-$rankme), ' заданий-ваше преимущество';}?>
+	<?php if ($all>3) if ($rank[$photo[4]] == $rankme) echo 'Одинаковые результаты';?>
+	<? if ($all>3) echo "</td>"?>
+  <? if ($all>3) echo "</tr>"?>
+ <? if ($all>4) echo "<tr>"?>
+    <? if ($all>4) echo "<td>"?><?php if ($all>4) echo "<img src=$photo[5]><br>", $name[5]?><? if ($all>4) echo "</td>"?>
+    <? if ($all>4) echo "<td>"?><?php if ($all>4) echo $rank[$photo[5]], ' выполненных заданий'?><? if ($all>4) echo "</td>"?>
+		<? if ($all>4) echo "<td>"?><?php if ($all>4) if ($rank[$photo[5]] > $rankme) {echo abs($rank[$photo[5]]-$rankme), ' заданий нужно выполнить чтобы догнать';}?>
+	<?php if ($all>4) if ($rank[$photo[5]] < $rankme) {echo abs($rank[$photo[5]]-$rankme), ' заданий-ваше преимущество';}?>
+	<?php if ($all>4) if ($rank[$photo[5]] == $rankme) echo 'Одинаковые результаты';?>
+	<? if ($all>4) echo "</td>"?>
+  <? if ($all>4) echo "</tr>"?>
+ 
+</table> 
+
+ <!--
+<?php
+   $mysqli->close();
+?>
+   -->
