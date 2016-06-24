@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Рейтинг</title>
+ </head>
+ <body>
+ <?php 
+$friends = file_get_contents("https://api.vk.com/method/friends.get?user_id=23192216&count=5&order=hints&fields=last_name,first_name,photo_100&v=5.50"); 
+$item =json_decode($friends, true);
+
+$del1 = array_pop($item);
+$del2 = array_pop($del1);
+
+/* Подключение к базе данных
+<?php
+  $mysqli = new mysqli('localhost', 'Admin', 'pass', 'mybase');
+---Запрос своего ранга 
+$rankme=mysql_query("SELECT rank FROM `mybase` where id=$myid")
+?>
+*/
+
+/*"Рыба" для тестирования*/
+
+$rankme = 2000;
+$rank = [
+    447495 => 2130,
+    485802 => 3124,
+	2698542 => 3332,
+	4527018 => 2000,
+	5334358 => 1456,
+];
+
+
+$array1 = $del2[0];
+$id1 = $array1['id'];
+$first_name1 = $array1['first_name'];
+$last_name1 = $array1['last_name'];
+$photo1 = $array1['photo_100'];
+/*
+--Запрос ранга
+$rank[1]=mysql_query("SELECT rank FROM `mybase` where id=$id1");*/
+
+$array2 = $del2[1];
+$id2 = $array2['id'];
+$first_name2 = $array2['first_name'];
+$last_name2 = $array2['last_name'];
+$photo2 = $array2['photo_100'];
+/*
+--Запрос ранга
+$rank[2]=mysql_query("SELECT rank FROM `mybase` where id=$id2");*/
+
+$array3 = $del2[2];
+$id3 = $array3['id'];
+$first_name3 = $array3['first_name'];
+$last_name3 = $array3['last_name'];
+$photo3 = $array3['photo_100'];
+/*
+--Запрос ранга
+$rank[3]=mysql_query("SELECT rank FROM `mybase` where id=$id3");*/
+
+$array4 = $del2[3];
+$id4 = $array4['id'];
+$first_name4 = $array4['first_name'];
+$last_name4 = $array4['last_name'];
+$photo4 = $array4['photo_100'];
+/*
+--Запрос ранга
+$rank[4]=mysql_query("SELECT rank FROM `mybase` where id=$id4");*/
+
+$array5 = $del2[4];
+$id5 = $array5['id'];
+$first_name5 = $array5['first_name'];
+$last_name5 = $array5['last_name'];
+$photo5 = $array5['photo_100'];
+/*
+--Запрос ранга
+$rank[5]=mysql_query("SELECT rank FROM `mybase` where id=$id5");*/
+
+?>
+ <table border="1" width="50%" cellpadding="5">
+   <tr>
+    <th>Информация о пользователе</th>
+    <th>Рейтинг</th>
+	<th>Разница</th>
+   </tr>
+   <?php if ($rank[$id1] < $rankme) echo "<tr bgcolor='#00ff00'>"?>
+  <?php if ($rank[$id1] > $rankme) echo "<tr bgcolor='#ff0000'>"?>
+  <?php if ($rank[$id1] == $rankme) echo "<tr bgcolor='#ffff00'>"?>
+    <td><?php echo "<img src=$photo1>", $last_name1, $first_name1?></td>
+    <td><?php echo $rank[$id1]?>выполненных заданий</td>
+	<td><?php if ($rank[$id1] > $rankme) {echo abs($rank[$id1]-$rankme), 'задани нужно выполнить чтобы догнать';}?>
+	<?php if ($rank[$id1] < $rankme) {echo abs($rank[$id1]-$rankme), 'заданий-ваше преимущество';}?>
+	<?php if ($rank[$id1] == $rankme) {echo 'одинаковые результаты';}?>
+	</td>
+  </tr>
+  <?php if ($rank[$id2] < $rankme) echo "<tr bgcolor='#00ff00'>"?>
+  <?php if ($rank[$id2] > $rankme) echo "<tr bgcolor='#ff0000'>"?>
+  <?php if ($rank[$id2] == $rankme) echo "<tr bgcolor='#ffff00'>"?>
+    <td><?php echo "<img src=$photo2>", $last_name2, $first_name2?></td>
+    <td><?php echo $rank[$id2]?>выполненных заданий</td>
+		<td><?php if ($rank[$id2] > $rankme) {echo abs($rank[$id2]-$rankme), 'задани нужно выполнить чтобы догнать';}?>
+	<?php if ($rank[$id2] < $rankme) {echo abs($rank[$id2]-$rankme), 'заданий-ваше преимущество';}?>
+	<?php if ($rank[$id2] == $rankme) echo $rovno;?>
+	</td>
+  </tr>
+  <?php if ($rank[$id3] < $rankme) echo "<tr bgcolor='#00ff00'>"?>
+  <?php if ($rank[$id3] > $rankme) echo "<tr bgcolor='#ff0000'>"?>
+  <?php if ($rank[$id3] == $rankme) echo "<tr bgcolor='#ffff00'>"?>
+    <td><?php echo "<img src=$photo3>", $last_name3, $first_name3?></td>
+    <td><?php echo $rank[$id3]?>выполненных заданий</td>
+		<td><?php if ($rank[$id3] > $rankme) {echo abs($rank[$id3]-$rankme), 'задани нужно выполнить чтобы догнать';}?>
+	<?php if ($rank[$id3] < $rankme) {echo abs($rank[$id3]-$rankme), 'заданий-ваше преимущество';}?>
+	<?php if ($rank[$id3] == $rankme) echo 'Одинаковые результаты';?>
+	</td>
+  </tr>
+  <?php if ($rank[$id4] < $rankme) echo "<tr bgcolor='#00ff00'>"?>
+  <?php if ($rank[$id4] > $rankme) echo "<tr bgcolor='#ff0000'>"?>
+  <?php if ($rank[$id4] == $rankme) echo "<tr bgcolor='#ffff00'>"?>
+    <td><?php echo "<img src=$photo4>", $last_name4, $first_name4?></td>
+    <td><?php echo $rank[$id4]?>выполненных заданий</td>
+		<td><?php if ($rank[$id4] > $rankme) {echo abs($rank[$id4]-$rankme), 'задани нужно выполнить чтобы догнать';}?>
+	<?php if ($rank[$id4] < $rankme) {echo abs($rank[$id4]-$rankme), 'заданий-ваше преимущество';}?>
+	<?php if ($rank[$id4] == $rankme) echo 'Одинаковые результаты';?>
+	</td>
+  </tr>
+  <?php if ($rank[$id5] < $rankme) echo "<tr bgcolor='#00ff00'>"?>
+  <?php if ($rank[$id5] > $rankme) echo "<tr bgcolor='#ff0000'>"?>
+  <?php if ($rank[$id5] == $rankme) echo "<tr bgcolor='#ffff00'>"?>
+    <td><?php echo "<img src=$photo5>", $last_name5, $first_name5?></td>
+    <td><?php echo $rank[$id5]?>выполненных заданий</td>
+		<td><?php if ($rank[$id5] > $rankme) {echo abs($rank[$id5]-$rankme), 'задани нужно выполнить чтобы догнать';}?>
+	<?php if ($rank[$id5] < $rankme) {echo abs($rank[$id5]-$rankme), 'заданий-ваше преимущество';}?>
+	<?php if ($rank[$id5] == $rankme) echo 'Одинаковые результаты';?>
+	</td>
+  </tr>
+<!--
+<?php
+    $mysqli->close();
+?>
+-->
+ </body>
+</html>
